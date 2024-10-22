@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -13,9 +14,12 @@ const (
 )
 
 func main()  {
+	infolog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	errorlog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal(err)
+		errorlog.Fatal(err)
 	}
 	
 	var cfg config
@@ -25,5 +29,8 @@ func main()  {
 	flag.StringVar(&cfg.api, "api", "http://localhost:4001", "URL to API")
 	flag.Parse()
 
+	cfg.stripe.key = os.Getenv("STRIPE_KEY")
+	cfg.stripe.secret = os.Getenv("STRIPE_SECRET")
 
+	
 }
