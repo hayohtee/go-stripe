@@ -1,6 +1,11 @@
 package main
 
-import "flag"
+import (
+	"flag"
+	"log"
+
+	"github.com/joho/godotenv"
+)
 
 const (
 	version = "1.0.0"
@@ -8,6 +13,11 @@ const (
 )
 
 func main()  {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+	
 	var cfg config
 	
 	flag.IntVar(&cfg.port, "port", 4000, "Server port to listen on")
@@ -15,5 +25,5 @@ func main()  {
 	flag.StringVar(&cfg.api, "api", "http://localhost:4001", "URL to API")
 	flag.Parse()
 
-	
+
 }
