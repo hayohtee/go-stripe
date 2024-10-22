@@ -18,7 +18,7 @@ type application struct {
 
 func (app *application) serve() error {
 	srv := http.Server{
-		Addr:              fmt.Sprint(":%d", app.cfg.port),
+		Addr:              fmt.Sprintf(":%d", app.cfg.port),
 		Handler:           app.routes(),
 		IdleTimeout:       30 * time.Second,
 		ReadTimeout:       10 * time.Second,
