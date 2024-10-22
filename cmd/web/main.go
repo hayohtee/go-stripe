@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"html/template"
 	"log"
 	"os"
 
@@ -14,7 +15,7 @@ const (
 )
 
 func main()  {
-	infolog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorlog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 	
 	err := godotenv.Load()
@@ -32,5 +33,12 @@ func main()  {
 	cfg.stripe.key = os.Getenv("STRIPE_KEY")
 	cfg.stripe.secret = os.Getenv("STRIPE_SECRET")
 
-	
+	app := application{
+		cfg: cfg,
+		infoLog: infoLog,
+		errorLog: errorlog,
+		templateCache: make(map[string]*template.Template),
+		version: version,
+	}
+
 }
