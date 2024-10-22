@@ -34,7 +34,7 @@ func (app *application) addDefaultData(td *templateData, r *http.Request) *templ
 func (app *application) renderTemplate(w http.ResponseWriter, r *http.Request, page string, td *templateData, partials ...string) error {
 	var t *template.Template
 	var err error
-	templateName := fmt.Sprintf("templates/%s_page.tmpl", page)
+	templateName := fmt.Sprintf("templates/%s_page.gohtml", page)
 
 	_, ok := app.templateCache[templateName]
 	if app.cfg.env == "production" && ok {
@@ -78,7 +78,7 @@ func (app *application) parseTemplate(partials []string, page, templateName stri
 			templateName,
 		)
 	} else {
-		t, err = template.New(fmt.Sprintf("%s_page.tmpl", page)).Funcs(functions).ParseFS(
+		t, err = template.New(fmt.Sprintf("%s_page.gohtml", page)).Funcs(functions).ParseFS(
 			templateFS,
 			"templates/base_layout.gohtml",
 			templateName,
