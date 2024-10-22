@@ -1,5 +1,10 @@
 package main
 
+import (
+	"embed"
+	"html/template"
+)
+
 type templateData struct {
 	StringMap       map[string]string
 	IntMap          map[string]int
@@ -13,3 +18,8 @@ type templateData struct {
 	API             string
 	CSSVersion      string
 }
+
+var functions = template.FuncMap{}
+
+//go:embed templates
+var templateFS embed.FS
