@@ -1,8 +1,6 @@
 package card
 
 import (
-	"errors"
-
 	"github.com/stripe/stripe-go/v80"
 	"github.com/stripe/stripe-go/v80/paymentintent"
 )
@@ -21,7 +19,11 @@ type Transaction struct {
 	BankReturnCode string
 }
 
-func (c *Card) CreatePaymentIntent(currency string, amount int64) (*stripe.PaymentIntent, string, error) {
+func (c *Card) Charge(currency string, amount int64) (*stripe.PaymentIntent, string, error) {
+	return c.createPaymentIntent(currency, amount)
+}
+
+func (c *Card) createPaymentIntent(currency string, amount int64) (*stripe.PaymentIntent, string, error) {
 	stripe.Key = c.Secret
 
 	params := &stripe.PaymentIntentParams{
