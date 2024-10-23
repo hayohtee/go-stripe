@@ -8,3 +8,5 @@ require (
 )
 
 require github.com/stripe/stripe-go/v80 v80.2.0
+
+require github.com/go-chi/cors v1.2.1
